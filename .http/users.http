@@ -1,0 +1,73 @@
+
+# ============================================================================
+# ============================================================================
+
+@email=jethro.gutierrez@gmail.com
+@password=Password123
+@name=Jethro gutierrez
+
+@host=http://localhost:3000
+
+
+
+### Iniciar sesión
+# @name loginUser
+POST {{host}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+
+@accessToken= {{loginUser.response.body.$.accessToken}}
+
+
+### Crear un usuario
+# @name createUser
+POST {{host}}/api/v1/users
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "fullName": "{{name}}x",
+  "email": "nuevo.usuariox@example.com",
+  "password": "Password123",
+  "phone": "1234567890",
+  "password": "Pass123"
+}
+
+
+####
+
+@userId={{createUser.response.body.$._id}}
+
+### Obtener todos los usuarios
+# @name getAllUsers
+GET {{host}}/api/v1/users?page=1&limit=10
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+### Obtener un usuario por ID
+# @name getUserById
+GET {{host}}/api/v1/users/{{userId}}
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+### Actualizar un usuario
+# @name updateUser
+PATCH {{host}}/api/v1/users/{{userId}}
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "fullName": "Usuario Actualizado",
+  "phone": "0987654321"
+}
+
+### Eliminar un usuario
+# @name deleteUser
+DELETE {{host}}/api/v1/users/{{userId}}
+Authorization: Bearer {{accessToken}}

@@ -1,0 +1,122 @@
+@email=jethro.gutierrez@gmail.com
+@password=Password123
+@name=Jethro gutierrez
+
+@host=http://localhost:3000
+
+### Iniciar sesión
+# 
+### Iniciar sesión
+# @name loginUser
+POST {{host}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+
+@accessToken= {{loginUser.response.body.$.accessToken}}
+
+### Crear un nuevo condominio
+# @name createCondominium
+POST {{host}}/api/v1/condominiums
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "Condominio Central8",
+  "street": "123 Main St",
+  "streetNumber": "123",  
+  "city": "Ciudad",
+  "state": "Estado",
+  "zipCode": "12345",
+  "country": "País",
+  "latitude": 12.345678,
+  "longitude": 98.765432,
+  "image": "https://example.com/image.jpg",
+  
+  "status": "ACTIVE",
+  "amenities": [
+    "piscina",
+    "gimnasio",
+    "salón de eventos"
+  ],
+
+  "adminId": "6816e86b-45e6-4245-949a-4b30ac0de6a3",
+  "neighborhood": "Centro",
+  "description": "Condominio ubicado en el centro de la ciudad",
+  "phone": "5578685182",
+  "email": "admin@condominio.com",
+  "website": "https://condominio.com"
+ 
+ 
+}
+
+### Obtener todos los condominios
+# @name getAllCondominiums
+GET {{host}}/api/v1/condominiums?page=1&limit=10
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+@condominiumId={{getAllCondominiums.response.body.$.data[0]._id}}
+
+
+### Obtener un condominio por ID
+# @name getCondominiumById
+GET {{host}}/api/v1/condominiums/{{condominiumId}}
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+
+
+### Obtener un condominio por ID
+# @name getApartmentsByCondominiumId
+GET {{host}}/api/v1/condominiums/{{condominiumId}}/apartments
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+
+### Actualizar un condominio por ID
+# @name updateCondominium
+PATCH {{host}}/api/v1/condominiums/{{condominiumId}}
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "Condominio Central2",
+  "street": "123 Main St",
+  "city": "Ciudad",
+  "state": "Estado",
+  "neighborhood": "Centro",
+  "zipCode": "12345",
+  "country": "País",
+  "latitude": 12.345678,
+  "longitude": 98.765432,
+  "image": "https://example.com/image.jpg",
+  
+  "status": "ACTIVE",
+  "amenities": [
+   
+    "gimnasio",
+    "salón de eventos"
+  ],
+
+  "adminId": "adminUserId",
+  "description": "Condominio ubicado en el centro de la ciudad",
+  "phone": "123-456-7890",
+  "email": "admin@condominio.com",
+  "website": "https://condominio.com",
+  "totalFloors":3,
+  "totalApartments": 30,
+  "totalParkingSpaces": 20,
+  "totalStorageSpaces": 10,
+  "totalCommonAreas": 5
+}
+
+### Eliminar un condominio por ID
+# @name deleteCondominium
+DELETE {{host}}/api/v1/condominiums/{{condominiumId}}
+Authorization: Bearer {{accessToken}}

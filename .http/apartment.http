@@ -1,0 +1,94 @@
+@email=jethro.gutierrez@gmail.com
+@password=Password123
+@name=Jethro gutierrez
+
+@host=http://localhost:3000
+
+### Iniciar sesión
+# @name loginUser
+POST {{host}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+
+@accessToken= {{loginUser.response.body.$.accessToken}}
+
+### Obtener todos los condominios
+# @name getAllCondominiums
+GET {{host}}/api/v1/condominium?page=1&limit=10
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+@condominiumId={{getAllCondominiums.response.body.$.data[0]._id}}
+
+
+
+
+### Crear un nuevo apartamento
+# @name createApartment
+POST {{host}}/api/v1/condominiums/{{condominiumId}}/apartment
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "Apartamento 102",   
+  "ownerId": "ownerUserId",  
+  "size": "120 m2",
+  "floor": "1",
+  "numberOfRooms": 3,
+  "numberOfBathrooms": 2,
+  "numberOfParkingSpaces": 1,
+  "amenities": ["roofgarden"],
+
+   
+
+  "description": "Apartamento con vista al parque"
+}
+
+### Obtener todos los apartamentos
+# @name getAllApartments
+GET {{host}}/api/v1/condominiums/{{condominiumId}}/apartment?page=1&limit=10
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+@apartmentId={{getAllApartments.response.body.$.data[0]._id}}
+
+
+
+### Obtener un apartamento por ID
+# @name getApartmentById
+GET {{host}}/api/v1/condominiums/{{condominiumId}}/apartment/{{apartmentId}}
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+
+
+
+
+### Actualizar un apartamento por ID
+# @name updateApartment
+PATCH {{host}}/api/v1/condominiums/{{condominiumId}}/apartment/{{apartmentId}}
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "Apartamento 101",   
+  "ownerId": "ownerUserId",  
+  "size": "120 m2",
+  "floor": "1",
+  "numberOfRooms": 3,
+  "numberOfBathrooms": 2,
+  "numberOfParkingSpaces": 1,
+  "amenities": ["roofgarden"]
+}
+
+
+### Eliminar un apartamento por ID
+# @name deleteApartment
+DELETE {{host}}/api/v1/condominiums/{{condominiumId}}/apartment/{{apartmentId}}
+Authorization: Bearer {{accessToken}}
