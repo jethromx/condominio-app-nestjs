@@ -98,7 +98,7 @@ export class PaymentsService {
     };
   }
 
-
+//9ea1c57d-403b-43e5-b810-448f1afbeb16
 
   async findOne(id: string,idApartment: string,condominiumId: string) {
     this.logger.log(`${this.FIND_PAYMENT_BY_ID} - IN`);
