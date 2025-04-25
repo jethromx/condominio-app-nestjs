@@ -3,7 +3,7 @@
 **Condominio App** es una aplicación para la gestión de condominios, que incluye funcionalidades como cuotas de mantenimiento, servicios comunes, pagos, y más.
 
 ## Tabla de Contenidos
-
+- [Tecnologías Usadas](#tecnologías-usadas)
 - [Requisitos](#requisitos)
 - [Instalación](#instalación)
 - [Variables de Entorno](#variables-de-entorno)
@@ -15,6 +15,18 @@
   - [Pagos](#pagos)
 - [Contribuciones](#contribuciones)
 - [Licencia](#licencia)
+
+---
+
+## Tecnologías Usadas
+
+Este proyecto utiliza las siguientes tecnologías:
+
+- Node.js
+- npm o yarn
+- MongoDB
+- Nestjs
+
 
 ---
 
