@@ -1,0 +1,80 @@
+@email=jethro.gutierrez@gmail.com
+@password=Password123
+@name=Jethro gutierrez
+
+@host=http://localhost:3000
+
+### Iniciar sesión
+# 
+### Iniciar sesión
+# @name loginUser
+POST {{host}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+
+@accessToken= {{loginUser.response.body.$.accessToken}}
+
+### Crear un nuevo catálogo
+# @name createCatalog
+POST http://localhost:3000/api/v1/catalogs
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "name": "Animal Typesxzxy12",
+  "description": "Catalog of animal types",
+  "items": [
+    "Dog",
+    "Cat",
+     "Bird"
+    ]
+}
+
+
+
+###
+
+### Obtener todos los catálogos
+# @name getAllCatalogs
+GET http://localhost:3000/api/v1/catalogs?page=1&limit=5
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+###
+@catalogId={{getAllCatalogs.response.body.$.[0]._id}}
+
+### Obtener un catálogo por ID
+GET http://localhost:3000/api/v1/catalogs/{{catalogId}}
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+###
+
+### Actualizar un catálogo por ID
+PATCH http://localhost:3000/api/v1/catalogs/{{catalogId}}
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+   "name": "Animal Typesy",
+  "description": "Catalog of animal typesydx",
+  "items": [
+    "Dog",
+    "Cat",
+    "Bird"
+    ]
+  
+}
+
+###
+
+### Eliminar un catálogo por ID
+DELETE http://localhost:3000/api/v1/catalogs/{{catalogId}}
+Authorization: Bearer {{accessToken}}
+Accept: application/json

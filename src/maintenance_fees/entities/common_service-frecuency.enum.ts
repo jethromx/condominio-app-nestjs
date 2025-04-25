@@ -1,0 +1,13 @@
+
+export enum CommonServiceFrecuencyStatus {
+    MONTHLY = 'MONTHLY',
+    QUARTERLY = 'QUARTERLY',
+    WEEKLY = 'WEEKLY',
+    ANUAL = 'ANUAL',
+    SEMIANUAL = 'SEMIANUAL',
+    BIWEEKLY = 'BIWEEKLY',
+    DAILY = 'DAILY',
+    TRIMESTRAL = 'TRIMESTRAL',
+    SEMESTRAL = 'SEMESTRAL',
+    BIMONTHLY = 'BIMONTHLY',
+}

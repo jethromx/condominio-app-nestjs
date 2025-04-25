@@ -1,0 +1,104 @@
+
+# ============================================================================
+# ============================================================================
+
+@email=jethro.gutierrez@gmail.com
+@password=Password123
+@name=Jethro gutierrez
+
+@host=http://localhost:3000
+
+
+### Registrar un nuevo usuario
+# @name registerUser
+POST {{host}}/api/v1/auth/register
+Content-Type: application/json
+
+{ 
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "fullName": "{{name}}"
+}
+
+
+### Registrar un nuevo usuario
+# @name demo
+POST {{host}}/api/v1/auth/register
+Content-Type: application/json
+
+{ 
+  "email": "demo@demo.com",
+  "password": "Pass123",
+  "fullName": "demo user"
+}
+
+######
+
+@accessToken= {{registerUser.response.body.accessToken}}
+@refreshToken= {{registerUser.response.body.refreshToken}}
+
+###
+
+### Iniciar sesión
+# @name loginUser
+POST {{host}}/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+## renevio de correo de verificacion, solo si el usuario no ha verificado su correo
+## y el token de verificacion no ha expirado
+POST {{host}}/api/v1/auth/resend-verification-email
+Content-Type: application/json
+
+{
+   "email": "{{email}}"
+}
+
+###
+POST {{host}}/api/v1/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email":  "{{email}}"
+}
+
+
+###
+POST {{host}}/api/v1/auth/reset-password
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlc3Ntb2toMjYwMTMyQGV4YW1wbGUuY29tIiwiaWF0IjoxNzQzNDY1Mjk4LCJleHAiOjE3NDM0Njg4OTh9.IMBnu1xQY7c92oMdy_6LP9LFfheHZZ0Y-nEa23Fouwg",
+  "newPassword": "newSecurePassword123"
+}
+
+### Obtener el perfil del usuario autenticado
+GET {{host}}/api/v1/auth/profile
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+
+
+### change password
+POST {{host}}/api/v1/auth/change-password
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "userId" : "d0e2b66d-f23d-4b5a-a55c-0dd62b454345",
+  "newPassword" : "newSecurePassword123"
+}
+
+## Refrescar el token de acceso
+###
+POST {{host}}/api/v1/auth/refresh-token
+Content-Type: application/json
+
+{
+  "refreshToken": "{{loginUser.response.body.refreshToken}}"
+}
