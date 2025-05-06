@@ -59,7 +59,7 @@ export class AuthService {
       const hashedPassword = this.generatePassword(password);
 
       const user = await this.userModel.create({
-        _id: uuidv4(),
+       // _id: uuidv4(),
         ...createUserDto,
         password: hashedPassword,
         isActive: !this.isEmailVerificationEnabled,

@@ -52,21 +52,22 @@ Accept: application/json
 
 ### Crear un pago
 # @name createPayment
-POST {{host}}/api/v1/condominiums/{{condominiumId}}/payments/{{apartmentId}}
+POST {{host}}/api/v1/condominiums/{{condominiumId}}/apartments/{{apartmentId}}/payments/
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
+  "idempotencyKey": "unique-key-12345",
   "amount": 1500,
   "paymentDate": "2025-05-15",
   "paymentMethod": "TRANSFERENCIA",  
   "transactionId":"xxxxx",
   "paymentReference":"xxxxx",
-    "maintenanceFeeId":"{{maintenanceFeeId}}",
-    "paymentMethodId":"",
+  "maintenanceFeeId":"{{maintenanceFeeId}}",
+    
     "status": "ACTIVE",
     "currency": "MX",
-    "paymentType": "CASH",
+   
     "paymentStatus": "PENDING"
  
    
@@ -77,7 +78,7 @@ Authorization: Bearer {{accessToken}}
 
 ## Obtener todos los pagos de una cuota de mantenimiento
 # @name getAllPayments
-GET {{host}}/api/v1/condominiums/{{condominiumId}}/payments/{{apartmentId}}?page=1&limit=10
+GET {{host}}/api/v1/condominiums/{{condominiumId}}/apartments/{{apartmentId}}/payments?page=1&limit=10
 Authorization: Bearer {{accessToken}}
 Accept: application/json
 
@@ -86,14 +87,14 @@ Accept: application/json
 
 ### Obtener un pago por ID
 # @name getPaymentById
-GET {{host}}/api/v1/condominiums/{{condominiumId}}/payments/{{apartmentId}}/{{paymentId}}
+GET {{host}}/api/v1/condominiums/{{condominiumId}}/apartments/{{apartmentId}}/payments/681267938b4a65237ebcee69
 Authorization: Bearer {{accessToken}}
 Accept: application/json
 
 
 ### Actualizar un pago
 # @name updatePayment
-PATCH {{host}}/api/v1/condominiums/{{condominiumId}}/payments/{{apartmentId}}/{{paymentId}}
+PATCH {{host}}/api/v1/condominiums/{{condominiumId}}/apartments/{{apartmentId}}/payments/{{paymentId}}
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
@@ -114,5 +115,5 @@ Authorization: Bearer {{accessToken}}
 
 ### Eliminar un pago
 # @name deletePayment
-DELETE {{host}}/api/v1/condominiums/{{condominiumId}}/payments/{{apartmentId}}/{{paymentId}}
+DELETE {{host}}/api/v1/condominiums/{{condominiumId}}/apartments/{{apartmentId}}/payments/{{paymentId}}
 Authorization: Bearer {{accessToken}}

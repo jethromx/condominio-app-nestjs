@@ -2,12 +2,11 @@ import { Prop,Schema, SchemaFactory } from "@nestjs/mongoose";
 import { AuditEntity } from "src/common/entities/Audit.entity";
 import { hideFields } from "src/common/helpers/hideFields.helper";
 import { CondominiumStatus } from "./condominium-status.enum";
+import mongoose from "mongoose";
 
 @Schema({ timestamps: true, toJSON: { transform: hideFields } , collection:'condominiums' })
 export class Condominium extends AuditEntity {
-    
-    @Prop({ type: String, required: true }) // Cambiar ObjectId a String
-    _id: string; 
+
 
     @Prop({
         type: String,
@@ -107,12 +106,11 @@ export class Condominium extends AuditEntity {
     })
     status: string; // Estatus del condominio
     
-    @Prop({
-        type: String,
-        required: false,
-        index: false
-    })
-    adminId: string;
+    @Prop({ type: mongoose.Schema.Types.ObjectId, 
+            ref: 'Users', 
+            required: true
+        })
+    adminId: mongoose.Types.ObjectId;
 
     @Prop({
         type: String,

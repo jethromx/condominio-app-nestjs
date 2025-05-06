@@ -1,5 +1,5 @@
 
-import { IsArray, IsEmail, IsEnum, IsLatitude, IsLongitude, IsNumber, IsOptional, IsPhoneNumber, IsString, IsUrl, IsUUID } from "class-validator";
+import { IsArray, IsEmail, IsEnum, IsLatitude, IsLongitude, IsMongoId, IsNumber, IsOptional, IsPhoneNumber, IsString, IsUrl, IsUUID } from "class-validator";
 import { CondominiumStatus } from "../entities/condominium-status.enum";
 
 export class CreateCondominiumDto {
@@ -38,7 +38,7 @@ export class CreateCondominiumDto {
 
     @IsString()
     @IsOptional()
-     @IsUUID()
+    @IsMongoId()
     adminId?: string; // ID del administrador del condominio
 
     @IsString()

@@ -20,24 +20,24 @@ Content-Type: application/json
 
 ### Obtener todos los condominios
 # @name getAllCondominiums
-GET {{host}}/api/v1/condominium?page=1&limit=10
+GET {{host}}/api/v1/condominiums?page=1&limit=10
 Authorization: Bearer {{accessToken}}
 Accept: application/json
 
 @condominiumId={{getAllCondominiums.response.body.$.data[0]._id}}
 
-
+@userId={{loginUser.response.body.$._id}}
 
 
 ### Crear un nuevo apartamento
 # @name createApartment
-POST {{host}}/api/v1/condominiums/{{condominiumId}}/apartment
+POST {{host}}/api/v1/condominiums/{{condominiumId}}/apartments
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
   "name": "Apartamento 102",   
-  "ownerId": "ownerUserId",  
+  "ownerId": "{{userId}}",  
   "size": "120 m2",
   "floor": "1",
   "numberOfRooms": 3,
@@ -52,7 +52,7 @@ Authorization: Bearer {{accessToken}}
 
 ### Obtener todos los apartamentos
 # @name getAllApartments
-GET {{host}}/api/v1/condominiums/{{condominiumId}}/apartment?page=1&limit=10
+GET {{host}}/api/v1/condominiums/{{condominiumId}}/apartments?page=1&limit=10
 Authorization: Bearer {{accessToken}}
 Accept: application/json
 
@@ -62,7 +62,7 @@ Accept: application/json
 
 ### Obtener un apartamento por ID
 # @name getApartmentById
-GET {{host}}/api/v1/condominiums/{{condominiumId}}/apartment/{{apartmentId}}
+GET {{host}}/api/v1/condominiums/{{condominiumId}}/apartments/{{apartmentId}}
 Authorization: Bearer {{accessToken}}
 Accept: application/json
 
@@ -72,13 +72,13 @@ Accept: application/json
 
 ### Actualizar un apartamento por ID
 # @name updateApartment
-PATCH {{host}}/api/v1/condominiums/{{condominiumId}}/apartment/{{apartmentId}}
+PATCH {{host}}/api/v1/condominiums/{{condominiumId}}/apartments/{{apartmentId}}
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
   "name": "Apartamento 101",   
-  "ownerId": "ownerUserId",  
+  "ownerId": "{{userId}}",  
   "size": "120 m2",
   "floor": "1",
   "numberOfRooms": 3,

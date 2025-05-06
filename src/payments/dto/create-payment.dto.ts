@@ -1,9 +1,20 @@
-import { IsString, IsDateString } from "class-validator";
+import { IsString, IsDateString, IsMongoId, IsOptional } from "class-validator";
 
 export class CreatePaymentDto {
 
+     @IsOptional()
      @IsString()
-     maintenanceFeeId: string; // ID de la cuota de mantenimiento a la que se aplica el pago
+     idempotencyKey?: string;
+
+     @IsOptional()
+     @IsString()
+     @IsMongoId()
+     maintenanceFeeId?: string; // ID de la cuota de mantenimiento a la que se aplica el pago
+
+     @IsOptional()
+     @IsString()
+     @IsMongoId()
+     commonServiceId?: string; // ID de la cuota de mantenimiento a la que se aplica el pago
      
    
      

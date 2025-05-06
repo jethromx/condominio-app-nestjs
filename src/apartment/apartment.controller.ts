@@ -6,7 +6,7 @@ import { UpdateApartmentDto } from './dto/update-apartment.dto';
 import { Auth, GetUser } from 'src/auth/decorators';
 import { ValidRoles } from 'src/auth/interfaces';
 
-@Controller('condominium/:condominiumId/apartment')
+@Controller('condominiums/:condominiumId/apartments')
 @Auth(ValidRoles.superUser, ValidRoles.admin)
 export class ApartmentController {
   constructor(private readonly apartmentService: ApartmentService) {}

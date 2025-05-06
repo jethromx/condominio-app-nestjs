@@ -6,9 +6,7 @@ import { Document } from 'mongoose';
 Schema({ timestamps: true, toJSON: { transform: hideFields }, collection: 'users' })
 export class UserC extends Document{
 
-    @Prop({ type: String, required: true }) // Cambiar ObjectId a String
-    _id: string;   
-
+    
     @Prop({
         unique: true,
         index: true

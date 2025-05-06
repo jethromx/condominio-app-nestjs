@@ -1,12 +1,21 @@
 import { Prop } from '@nestjs/mongoose';
-import { Schema as MongooseSchema } from 'mongoose';
+import mongoose from 'mongoose';
+
 
 export class AuditEntity {
   
 
-  @Prop({ type: String, ref: 'User', required: true }) // Usuario que creó la entidad
-  createdBy: string;
+  // Usuario que creó la entidad
+  @Prop({ type: mongoose.Schema.Types.ObjectId, 
+              ref: 'Users', 
+              required: true
+          })
+  createdBy:  mongoose.Types.ObjectId;
 
-  @Prop({ type: String, ref: 'User' }) // Usuario que actualizó la entidad
-  updatedBy: string;
+   // Usuario que actualizó la entidad
+  @Prop({ type: mongoose.Schema.Types.ObjectId, 
+              ref: 'Users', 
+              required: true
+          })
+  updatedBy:  mongoose.Types.ObjectId;
 }

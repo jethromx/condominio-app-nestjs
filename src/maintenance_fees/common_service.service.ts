@@ -1,12 +1,11 @@
 import { BadRequestException, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose/dist/common";
 import { CommonService } from "./entities/common_service.entity";
-import { Model } from "mongoose";
+import { isValidObjectId, Model } from "mongoose";
 import { CondominiumService } from "src/condominium/condominium.service";
 import { isValidUUIDv4 } from "src/common/helpers/validateUUID";
 import { ACTIVE, DELETED, ID_NOT_VALID } from "src/common/messages.const";
 import { PaginationDTO } from "src/common/dto/Pagination.dto";
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable() 
 export class CommonServiceService{
@@ -35,8 +34,7 @@ export class CommonServiceService{
         await this.condominiumService.findOne(condominiumId);
 
         // Crear un nuevo servicio común
-        const commonService = new this.commonServiceModel({
-            _id: uuidv4(),
+        const commonService = new this.commonServiceModel({           
             ...createCommonServiceDto,
             condominiumId,
             createdBy: userId,
@@ -55,11 +53,6 @@ export class CommonServiceService{
         // Verificar si el condominio existe
         await this.condominiumService.findOne(condominiumId);
 
-        /*
-        const rootFilter = {
-            condominiumId,
-            status: { $ne: DELETED }, // Filtrar por estado diferente a "deleted"
-        };*/
 
         const rootFilter = {
             condominiumId,
@@ -175,9 +168,9 @@ export class CommonServiceService{
 
     
     private validateId(id: string) {
-          if (!isValidUUIDv4(id)) {
-            this.logger.error(ID_NOT_VALID(id));
-            throw new BadRequestException(ID_NOT_VALID(id));
-          }
+        if (!isValidObjectId(id)) {
+          this.logger.error(ID_NOT_VALID(id));
+          throw new BadRequestException(ID_NOT_VALID(id));
         }
+      }
 }
