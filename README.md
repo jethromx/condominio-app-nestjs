@@ -16,6 +16,12 @@
 - [Contribuciones](#contribuciones)
 - [Licencia](#licencia)
 
+
+
+---
+![Diagrama de Entidades](assets/images/entities.png)
+
+
 ---
 
 ## Tecnologías Usadas
@@ -37,6 +43,9 @@ Antes de comenzar, asegúrate de tener instalados los siguientes requisitos:
 - [Node.js](https://nodejs.org/) (versión 16 o superior)
 - [npm](https://www.npmjs.com/) o [yarn](https://yarnpkg.com/)
 - [MongoDB](https://www.mongodb.com/) (base de datos)
+
+
+
 
 ---
 

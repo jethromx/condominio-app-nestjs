@@ -5,7 +5,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Catalog } from './entities/catalog.entity';
 import { IN, OUT } from 'src/common/messages.const';
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class CatalogsService {
@@ -14,10 +13,8 @@ export class CatalogsService {
   private readonly CREATE_CATALOG = 'CREATE_CATALOG';
   private readonly UPDATE_CATALOG = 'UPDATE_CATALOG';
   private readonly DELETE_CATALOG = 'DELETE_CATALOG';
-  private readonly FIND_CATALOG = 'FIND_CATALOG';
   private readonly FIND_ALL_CATALOG = 'FIND_ALL_CATALOG';
   private readonly FIND_CATALOG_BY_ID = 'FIND_CATALOG_BY_ID';
-  private readonly FIND_CATALOG_BY_NAME = 'FIND_CATALOG_BY_NAME';
 
 
 
@@ -39,7 +36,6 @@ export class CatalogsService {
     }
 
     const catalog = await this.catalogModel.create({
-      _id: uuidv4(),
       userId, // Pasar el userId al documento
       ...createCatalogDto,
       createdBy: userId,
@@ -60,10 +56,10 @@ export class CatalogsService {
 
     // Obtener los catálogos con paginación
     const catalogs = await this.catalogModel
-    .find()
-    .skip(skip)
-    .limit(limit)
-    .exec();
+      .find()
+      .skip(skip)
+      .limit(limit)
+      .exec();
 
     // Contar el total de documentos
     const total = await this.catalogModel.countDocuments().exec();
@@ -101,7 +97,7 @@ export class CatalogsService {
     }
 
     const updatedCatalog = await this.catalogModel.findByIdAndUpdate(
-      id, 
+      id,
       { ...updateCatalogDto, updatedBy: userId },
       { new: true }).exec();
     if (!updatedCatalog) {

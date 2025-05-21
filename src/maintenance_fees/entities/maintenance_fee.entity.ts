@@ -1,13 +1,12 @@
 import { Prop,Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose from "mongoose";
 import { AuditEntity } from "src/common/entities/Audit.entity";
 import { hideFields } from "src/common/helpers/hideFields.helper";
 
 @Schema({ timestamps: true, toJSON: { transform: hideFields } })
 export class MaintenanceFee extends AuditEntity {
     
-    @Prop({ type: String, required: true }) // Cambiar ObjectId a String
-    _id: string; 
-
+   
     @Prop({
         type: String,
         required: true,
@@ -61,12 +60,13 @@ export class MaintenanceFee extends AuditEntity {
     })
     feedType: string; // Tipo de cuota de mantenimiento (fija, variable, extraordinaria)
 
-    @Prop({
-        type: String,
-        required: true,
-        index: false
-    })
-    condominiumId: string; // ID del condominio al que pertenece la cuota de mantenimiento
+     @Prop({
+            type: mongoose.Schema.Types.ObjectId, // Cambiar a ObjectId
+            ref: 'Condominium', // Referencia al modelo Condominium
+            required: true,
+            index: true,
+          })
+    condominiumId: mongoose.Types.ObjectId; // ID del condominio al que pertenece la cuota de mantenimiento
 
     @Prop({
         type: String,

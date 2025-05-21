@@ -2,12 +2,17 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { AuditEntity } from "src/common/entities/Audit.entity";
 import { hideFields } from "src/common/helpers/hideFields.helper";
 import { ApartmentStatus } from "./apartment-status.enum";
+import mongoose from "mongoose";
+import { User } from "src/auth/entities/user.entity";
 
 @Schema({ timestamps: true, toJSON: { transform: hideFields } })
 export class Apartment extends AuditEntity {
-
+/*
     @Prop({ type: String, required: true }) // Cambiar ObjectId a String
     _id: string;
+
+    
+*/
 
     @Prop({
         type: String,        
@@ -21,20 +26,31 @@ export class Apartment extends AuditEntity {
         index: false
     })
     description: string;
-
+/*
     @Prop({
         type: String,
         required: true,
         index: false
     })
-    condominiumId: string;
+    condominiumId: string;*/
 
     @Prop({
-        type: String,
+        type: mongoose.Schema.Types.ObjectId, // Cambiar a ObjectId
+        ref: 'Condominium', // Referencia al modelo Condominium
+        required: true,
+        index: true,
+      })
+      condominiumId: mongoose.Types.ObjectId; 
+
+    
+
+    @Prop({
+        type: mongoose.Schema.Types.ObjectId, // Cambiar a ObjectId
+        ref: 'Condominium', // Referencia al modelo Condominium
         required: false,
-        index: false
-    })
-    ownerId: string;
+        index: false,
+      })
+    ownerId: User;
 
     @Prop({
         type: String,

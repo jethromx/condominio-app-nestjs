@@ -19,6 +19,7 @@ Content-Type: application/json
 ###
 
 @accessToken= {{loginUser.response.body.$.accessToken}}
+@userId={{loginUser.response.body.$._id}}
 
 ### Crear un nuevo condominio
 # @name createCondominium
@@ -27,7 +28,7 @@ Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-  "name": "Condominio Central8",
+  "name": "Condominio Central 1212",
   "street": "123 Main St",
   "streetNumber": "123",  
   "city": "Ciudad",
@@ -45,7 +46,7 @@ Authorization: Bearer {{accessToken}}
     "salón de eventos"
   ],
 
-  "adminId": "6816e86b-45e6-4245-949a-4b30ac0de6a3",
+  "adminId": "{{userId}}",
   "neighborhood": "Centro",
   "description": "Condominio ubicado en el centro de la ciudad",
   "phone": "5578685182",
@@ -104,9 +105,9 @@ Authorization: Bearer {{accessToken}}
     "salón de eventos"
   ],
 
-  "adminId": "adminUserId",
+  "adminId": "{{userId}}",
   "description": "Condominio ubicado en el centro de la ciudad",
-  "phone": "123-456-7890",
+  "phone": "5578685182",
   "email": "admin@condominio.com",
   "website": "https://condominio.com",
   "totalFloors":3,

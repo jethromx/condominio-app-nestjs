@@ -10,8 +10,8 @@ import { PaymentsModule } from './payments/payments.module';
 import { EventsModule } from './events/events.module';
 import { MaintenanceFeesModule } from './maintenance_fees/maintenance_fees.module';
 import { UsersModule } from './users/users.module';
-import { MonthlyStatementModule } from './monthly-statement/monthly-statement.module';
 import { AccountStatementModule } from './account-statement/account-statement.module';
+import { ReportsModule } from './reports/reports.module';
 
 
 @Module({
@@ -41,7 +41,7 @@ import { AccountStatementModule } from './account-statement/account-statement.mo
     ApartmentModule, 
     PaymentsModule, 
     EventsModule, 
-    MaintenanceFeesModule, UsersModule, MonthlyStatementModule, AccountStatementModule,    
+    MaintenanceFeesModule, UsersModule,  AccountStatementModule, ReportsModule,    
   ],
   controllers: [],
   providers: [],

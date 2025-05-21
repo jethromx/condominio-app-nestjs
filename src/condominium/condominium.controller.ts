@@ -16,7 +16,7 @@ export class CondominiumController {
     private readonly apartmentService: ApartmentService,
   ) { }
 
-  @Post() 
+  @Post()
   create(
     @Body() createCondominiumDto: CreateCondominiumDto,
     @GetUser('id') userId: string,) {
@@ -33,14 +33,14 @@ export class CondominiumController {
 
 
 
-  @Get(':id')  
+  @Get(':id')
   findOne(@Param('id') id: string) {
     return this.condominiumService.findOne(id);
   }
 
 
 
-  @Get(':id/apartments')  
+  @Get(':id/apartments')
   findApartments(
     @Query() paginationDto: PaginationDTO,
     @Param('id') idCondominium: string) {
@@ -49,7 +49,7 @@ export class CondominiumController {
 
 
 
-  @Patch(':id')  
+  @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateCondominiumDto: UpdateCondominiumDto,
@@ -59,7 +59,7 @@ export class CondominiumController {
 
 
 
-  @Delete(':id')  
+  @Delete(':id')
   async remove(@
     Param('id') id: string,
     @Res() res: Response) {

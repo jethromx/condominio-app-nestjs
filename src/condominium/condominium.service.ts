@@ -2,14 +2,14 @@ import { BadRequestException, Injectable, Logger, NotFoundException } from '@nes
 import { CreateCondominiumDto } from './dto/create-condominium.dto';
 import { UpdateCondominiumDto } from './dto/update-condominium.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { isValidObjectId, Model } from 'mongoose';
 import { Condominium } from './entities/condominium.entity';
 import { ACTIVE, DELETED, ID_NOT_VALID, IN, OUT } from 'src/common/messages.const';
 import { v4 as uuidv4 } from 'uuid';
 import { handleQuery } from 'src/common/helpers/handleQuery.helper';
 import { DEFAULTS } from 'src/common/constants';
 import { UsersService } from 'src/users/users.service';
-import { isValidUUIDv4 } from 'src/common/helpers/validateUUID';
+
 
 @Injectable()
 export class CondominiumService {
@@ -56,7 +56,6 @@ export class CondominiumService {
       this.logger.debug(`${this.CREATE_CONDOMINIUM} - Condominium with name: ${createCondominiumDto.name}`);
       // Crear un nuevo condominio
       const condominium = new this.condominiumModel({
-        _id: uuidv4(),
         ...createCondominiumDto,
         createdBy: userId,
         updatedBy: userId,
@@ -212,7 +211,7 @@ export class CondominiumService {
   }
 
   private validateId(id: string) {
-    if (!isValidUUIDv4(id)) {
+    if (!isValidObjectId(id)) {
       this.logger.error(ID_NOT_VALID(id));
       throw new BadRequestException(ID_NOT_VALID(id));
     }

@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, Logger, NotFoundException } from '@nes
 import { CreateApartmentDto } from './dto/create-apartment.dto';
 import { UpdateApartmentDto } from './dto/update-apartment.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { isValidObjectId, Model } from 'mongoose';
 import { CondominiumService } from 'src/condominium/condominium.service';
 import { Apartment } from './entities/apartment.entity';
 import { v4 as uuidv4 } from 'uuid';
@@ -73,7 +73,7 @@ export class ApartmentService {
     this.logger.debug(`${this.CREATE_APARTMENT} - Creating Apartment with name: ${createApartmentDto.name}`);
     // Crear el apartamento
     const apartment = await this.apartmentModel.create({
-      _id: uuidv4(),
+     
       ...createApartmentDto,
       condominiumId: condominiumId,
       createdBy: userId,
@@ -182,7 +182,7 @@ export class ApartmentService {
       throw new NotFoundException(`Apartment with ID ${id} not found`);
     }
 
-    if(idCondominium !== apartment.condominiumId){
+    if(idCondominium !== apartment.condominiumId._id.toString()){
       this.logger.error(`${this.FIND_APARTMENT_BY_ID} - Apartment with ID "${id}" not found in condominium "${idCondominium}"`);
       throw new NotFoundException(`Apartment with ID ${id} not found in condominium ${idCondominium}`);
     }
@@ -255,7 +255,7 @@ export class ApartmentService {
   }
 
   private validateId(id: string) {
-      if (!isValidUUIDv4(id)) {
+      if (!isValidObjectId(id)) {
         this.logger.error(ID_NOT_VALID(id));
         throw new BadRequestException(ID_NOT_VALID(id));
       }

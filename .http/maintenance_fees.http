@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ### Obtener todos los condominios
 # @name getAllCondominiums
-GET {{host}}/api/v1/condominium?page=1&limit=10
+GET {{host}}/api/v1/condominiums?page=1&limit=10
 Authorization: Bearer {{accessToken}}
 Accept: application/json
 
@@ -31,7 +31,7 @@ Accept: application/json
 
 ### Obtener todos los apartamentos
 # @name getAllApartments
-GET {{host}}/api/v1/condominiums/{{condominiumId}}/apartment?page=1&limit=10
+GET {{host}}/api/v1/condominiums/{{condominiumId}}/apartments?page=1&limit=10
 Authorization: Bearer {{accessToken}}
 Accept: application/json
 
@@ -53,6 +53,7 @@ Authorization: Bearer {{accessToken}}
   "amount": 1500,
   "status": "ACTIVE",
   "feedType": "MANTENIMIENTO",
+  "frecuency": "MONTHLY",
   "detail": "Cuota de mantenimiento mensual de mayo",
   "currency": "MX"
 }

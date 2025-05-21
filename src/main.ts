@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { APP_RUNNING } from './common/messages.const';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -26,6 +27,16 @@ async function bootstrap() {
       },
     }),
   );
+
+  // Habilitar CORS
+  app.enableCors({
+    origin: process.env.HOST_FRONT, // Permitir solicitudes desde este origen
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
+    credentials: true, // Permitir cookies y encabezados de autenticación
+  });
+
+  // Habilitar Helmet
+  app.use(helmet());
 
   await app.listen(process.env.PORT);
   logger.log(APP_RUNNING(process.env.PORT));

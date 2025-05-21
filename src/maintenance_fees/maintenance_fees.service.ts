@@ -3,12 +3,11 @@ import { CreateMaintenanceFeeDto } from './dto/create-maintenance_fee.dto';
 import { UpdateMaintenanceFeeDto } from './dto/update-maintenance_fee.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { isValidObjectId, Model } from 'mongoose';
 import { MaintenanceFee } from './entities/maintenance_fee.entity';
 import { ACTIVE, DELETED, ID_NOT_VALID } from 'src/common/messages.const';
 import { CondominiumService } from 'src/condominium/condominium.service';
 import { PaginationDTO } from 'src/common/dto/Pagination.dto';
-import { isValidUUIDv4 } from 'src/common/helpers/validateUUID';
 
 
 @Injectable()
@@ -47,7 +46,7 @@ export class MaintenanceFeesService {
 
     // Crear un nuevo mantenimiento
     const maintenanceFee = new this.maintenanceFeeModel({
-      _id: uuidv4(),
+     
       condominiumId: condominiumId,     
       createdBy: userId,
       updatedBy: userId,
@@ -58,8 +57,9 @@ export class MaintenanceFeesService {
     await maintenanceFee.save();
     this.logger.log(`${this.CREATE_MAINTENANCE_FEE} - OUT`);
     return maintenanceFee;
-
   }
+
+
 
   async findAll(paginationDto: PaginationDTO,condominiumId:string ) {
     this.logger.log(`${this.FIND_ALL_MAINTENANCE_FEE} - IN`);
@@ -95,9 +95,9 @@ export class MaintenanceFeesService {
         page,
         limit,
         data: maintenanceFees,
-      };
-    
+      };  
   }
+
 
 
 
@@ -146,6 +146,33 @@ export class MaintenanceFeesService {
 
 
 
+  async getMaintenanceByStartDate(condominiumId:string,startDate :Date,endDate: Date) {
+    this.logger.log(`${this.FIND_ALL_MAINTENANCE_FEE} - IN`);
+    this.validateId(condominiumId);
+   
+    // Verificar si el condominio existe
+    await this.condominiumService.findOne(condominiumId);
+
+    const rootFilter = { 
+      status: ACTIVE, 
+      condominiumId: condominiumId, 
+      startDate: { $gte: startDate.toISOString(), $lte: endDate.toISOString() },
+      feedType: { $eq: 'MANTENIMIENTO' }
+     };
+
+     this.logger.debug(`Filter: ${JSON.stringify(rootFilter)}`);
+
+    const maintenanceFees = await this.maintenanceFeeModel
+      .findOne(rootFilter)   
+      .exec();
+
+    this.logger.log(`${this.FIND_ALL_MAINTENANCE_FEE} - OUT`);
+    //return maintenanceFees.pop();
+    return maintenanceFees;
+  }
+
+
+
 
   async remove(condominiumId:string,id: string) {
     this.logger.log(`${this.DELETE_MAINTENANCE_FEE} - IN`);
@@ -169,10 +196,14 @@ export class MaintenanceFeesService {
     return maintenanceFee
   }
 
+  
+
   private validateId(id: string) {
-      if (!isValidUUIDv4(id)) {
+      if (!isValidObjectId(id)) {
         this.logger.error(ID_NOT_VALID(id));
         throw new BadRequestException(ID_NOT_VALID(id));
       }
     }
+
+    
 }

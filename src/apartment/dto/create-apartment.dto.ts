@@ -1,4 +1,4 @@
-import { IsArray, IsEnum, IsNumber, IsOptional, IsString, IsUUID } from "class-validator";
+import { IsArray, IsEnum, IsMongoId, IsNumber, IsOptional, IsString, IsUUID } from "class-validator";
 import { ApartmentStatus } from "../entities/apartment-status.enum";
 
 export class CreateApartmentDto {
@@ -7,7 +7,7 @@ export class CreateApartmentDto {
 
 
     @IsString()
-    @IsUUID()
+    @IsMongoId()
     ownerId: string; // ID del propietario del apartamento
 
     @IsString()
