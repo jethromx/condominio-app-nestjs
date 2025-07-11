@@ -107,10 +107,12 @@ export class Condominium extends AuditEntity {
     status: string; // Estatus del condominio
     
     @Prop({ type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Users', 
+            ref: 'User', 
             required: true
         })
     adminId: mongoose.Types.ObjectId;
+
+    
 
     @Prop({
         type: String,

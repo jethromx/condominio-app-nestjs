@@ -46,6 +46,7 @@ Accept: application/json
 
 
 @maintenanceFeeId={{getAllMaintenanceFees.response.body.$.data[0]._id}}
+@maintenanceFeeId=68713d9312078df35a1c5e44
 ### Obtener todas las cuotas de mantenimiento
 
 
@@ -57,12 +58,12 @@ Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-  "idempotencyKey": "unique-key-12345",
-  "amount": 1500,
+  "idempotencyKey": "68712ea8ff672b5f9cf386d9",
+  "amount": 15000,
   "paymentDate": "2025-05-15",
   "paymentMethod": "TRANSFERENCIA",  
-  "transactionId":"xxxxx",
-  "paymentReference":"xxxxx",
+  "transactionId":"68712ea8ff672b5f9cf386d9",
+  "paymentReference":"68712ea8ff672b5f9cf386d9",
   "maintenanceFeeId":"{{maintenanceFeeId}}",
     
     "status": "ACTIVE",

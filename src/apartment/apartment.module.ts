@@ -1,28 +1,60 @@
 import { forwardRef, Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { PassportModule } from '@nestjs/passport';
+
 import { ApartmentService } from './apartment.service';
 import { ApartmentController } from './apartment.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { CondominiumModule } from 'src/condominium/condominium.module';
 import { Apartment, ApartmentSchema } from './entities/apartment.entity';
-import { PassportModule } from '@nestjs/passport';
-import { User } from 'src/auth/entities/user.entity';
+
+// Módulos relacionados
+import { CondominiumModule } from 'src/condominium/condominium.module';
 import { UsersModule } from 'src/users/users.module';
 
+// Pipes, interceptors y filtros personalizados
+import { ParseObjectIdPipe } from 'src/common/pipes/parse-object-id.pipe';
+import { ResponseTransformInterceptor } from 'src/common/interceptors/response-transform.interceptor';
+import { AllExceptionsFilter } from 'src/common/filters/all-exceptions.filter';
+
+/**
+ * Módulo de Apartamentos
+ * 
+ * Gestiona todo lo relacionado con apartamentos dentro de condominios:
+ * - CRUD de apartamentos
+ * - Validación de datos
+ * - Relaciones con condominios y usuarios
+ * - Interceptores y filtros personalizados
+ */
 @Module({
   controllers: [ApartmentController],
-  providers: [ApartmentService],
+  providers: [
+    ApartmentService,
+    // Pipes personalizados
+    ParseObjectIdPipe,
+    // Interceptores
+    ResponseTransformInterceptor,
+    // Filtros de excepciones
+    AllExceptionsFilter,
+  ],
   imports: [
-    ApartmentModule,
-    UsersModule,
+    // Configuración de Mongoose para la entidad Apartment
     MongooseModule.forFeature([
       { name: Apartment.name, schema: ApartmentSchema },
     ]),
-    forwardRef(() => CondominiumModule), // Importar el módulo Condominium si se necesita
+    
+    // Módulos relacionados con referencia circular
+    forwardRef(() => CondominiumModule),
+    
+    // Módulo de usuarios para validación de propietarios
+    UsersModule,
+    
+    // Autenticación JWT
     PassportModule.register({
-                  defaultStrategy: 'jwt'
-                }),
+      defaultStrategy: 'jwt'
+    }),
   ],
-  exports: [ApartmentService], // Exportar el servicio si se necesita en otros módulos
-  // Puedes agregar otros módulos aquí si es necesario
+  exports: [
+    ApartmentService,
+    ParseObjectIdPipe, // Exportar para uso en otros módulos
+  ],
 })
 export class ApartmentModule {}
