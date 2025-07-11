@@ -1,6 +1,6 @@
 import { IsOptional, IsString, IsBoolean, IsEmail } from 'class-validator';
-import { Transform, Type } from 'class-transformer';
-import { PaginationDTO } from 'src/common/dto/pagination.dto';
+import { Transform } from 'class-transformer';
+import { PaginationDTO } from 'src/common/dto/Pagination.dto';
 
 export class UserQueryDto extends PaginationDTO {
   @IsOptional()
