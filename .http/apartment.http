@@ -77,7 +77,7 @@ Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-  "name": "Apartamento 101",   
+  "name": "Apartamento 10221",   
   "ownerId": "{{userId}}",  
   "size": "120 m2",
   "floor": "1",
@@ -90,5 +90,5 @@ Authorization: Bearer {{accessToken}}
 
 ### Eliminar un apartamento por ID
 # @name deleteApartment
-DELETE {{host}}/api/v1/condominiums/{{condominiumId}}/apartment/{{apartmentId}}
+DELETE {{host}}/api/v1/condominiums/{{condominiumId}}/apartments/{{apartmentId}}
 Authorization: Bearer {{accessToken}}

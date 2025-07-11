@@ -28,7 +28,7 @@ export const IN = 'IN';
 export const OUT = 'OUT';
 export const ERROR = 'ERROR';
 
-export const MONGOID_NOT_VALID = (message: string) => `${ message } is not a valida MongoID`
+export const MONGOID_NOT_VALID = (message: string) => `${ message } is not a valid ID`
 
 
 export const ACTIVE = 'ACTIVE';

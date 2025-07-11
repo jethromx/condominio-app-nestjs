@@ -53,4 +53,4 @@ export class User extends Document {
 
 }
 
-export const UsuarioSchema = SchemaFactory.createForClass(User);
+export const UserSchema = SchemaFactory.createForClass(User);
